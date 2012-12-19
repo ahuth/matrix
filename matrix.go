@@ -1,10 +1,11 @@
 // Package matrix implements a simple library for creating and
-// manipulating matrices.
+// manipulating matrices, and performing basic linear algebra.
 
 package matrix
 
 import (
 	"fmt"
+	"strconv"
 )
 
 type Matrix struct {
@@ -29,6 +30,20 @@ func (A *Matrix) Get(r, c int) int {
 // I need to work on the formatting of the output.
 
 func (A *Matrix) Print() {
+	colLens := make([]int, A.columns)
+	
+	for i := range colLens {
+		var maxLength int
+		thisColumn := A.Column(i + 1)
+		for j := range thisColumn {
+			thisLength := len(strconv.Itoa(thisColumn[j]))
+			if thisLength > maxLength {
+				maxLength = thisLength
+			}
+		}
+		colLens[i] = maxLength
+	}
+	
 	for i := 1; i <= A.rows; i++ {
 		fmt.Println(A.Row(i))
 	}
@@ -53,19 +68,19 @@ func (A *Matrix) Row(n int) []int {
 }
 
 // Multiply multiplies two matrices together and return the resulting matrix.
-// For each element of the result matrix, we combine the corresponding
-// row from matrix A and column from matrix B.
+// For each element of the result matrix, we get the dot product of the
+// corresponding row from matrix A and column from matrix B.
 
-func Multiply(A, B Matrix) Matrix {
+func Multiply(A, B Matrix) *Matrix {
 	C := Zeros(A.rows, B.columns)
 	for r := 1; r <= C.rows; r++ {
 		A_row := A.Row(r)
 		for c := 1; c <= C.columns; c++ {
 			B_col := B.Column(c)
-			C.Set(r, c, combine_arrays(A_row, B_col))
+			C.Set(r, c, dotProduct(A_row, B_col))
 		}
 	}
-	return C
+	return &C
 }
 
 // Add adds two matrices together and returns the resulting matrix.  To do
@@ -101,21 +116,13 @@ func Zeros(r, c int) Matrix {
 	return Matrix{r, c, make([]int, r*c)}
 }
 
-// Ones creates an r x c sized matrix that is filled with ones.  It first
-// creates a zero-filled array, and then sets each element to one.
-
-func Ones(r, c int) Matrix {
-	A := Zeros(r, c)
-	for i := range A.data {
-		A.data[i] = 1
-	}
-	return A
-}
-
 // New creates an r x c sized matrix that is filled with the provided data.
 // The matrix data is represented as one long slice.
 
 func New(r, c int, data []int) Matrix {
+	if len(data) != r*c {
+		panic("[]int data provided to matrix.New is great than the provided capacity of the matrix!'")
+	}
 	A := Zeros(r, c)
 	A.data = data
 	return A
@@ -128,11 +135,11 @@ func findIndex(r, c int, A *Matrix) int {
 	return (r-1)*A.columns + (c - 1)
 }
 
-// combine_arrays takes two slices and combines them with the form of
-// (a[0] * b[0]) + (a[1] * b[1]) + ... + (a[n] * b[n]).  This is part
-// of how we multiply matrices together.
+// dotProduct calculates the algebraic dot product of two slices.  This is just
+// the sum  of the products of corresponding elements in the slices.  We use
+// this when we multiply matrices together.
 
-func combine_arrays(a, b []int) int {
+func dotProduct(a, b []int) int {
 	var total int
 	for i := 0; i < len(a); i++ {
 		total += a[i] * b[i]
