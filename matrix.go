@@ -26,13 +26,15 @@ func (A *Matrix) Get(r, c int) int {
 	return A.data[findIndex(r, c, A)]
 }
 
-// Print outputs the contents of the matrix to the standard output.
-// I need to work on the formatting of the output.
+// Print converts the matrix into a string and then outputs it to fmt.Println.
 
 func (A *Matrix) Print() {
-	colLens := make([]int, A.columns)
 	
-	for i := range colLens {
+	// Find the width (in characters) that each column needs to be.
+
+	columnLengths := make([]int, A.columns)
+	
+	for i := range columnLengths {
 		var maxLength int
 		thisColumn := A.Column(i + 1)
 		for j := range thisColumn {
@@ -41,7 +43,7 @@ func (A *Matrix) Print() {
 				maxLength = thisLength
 			}
 		}
-		colLens[i] = maxLength
+		columnLengths[i] = maxLength
 	}
 	
 	for i := 1; i <= A.rows; i++ {
