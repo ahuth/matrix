@@ -26,15 +26,17 @@ func (A *Matrix) Get(r, c int) int {
 	return A.data[findIndex(r, c, A)]
 }
 
-// Print converts the matrix into a string and then outputs it to fmt.Println.
+// Print converts the matrix into a string and then outputs it to fmt.Printf.
 
 func (A *Matrix) Print() {
 	
-	// Find the width (in characters) that each column needs to be.
+	// Find the width (in characters) that each column needs to be.  We hold these
+	// widths as strings, not ints, because we're going to use these in a printf
+	// function.
 
-	columnLengths := make([]int, A.columns)
+	columnWidths := make([]string, A.columns)
 	
-	for i := range columnLengths {
+	for i := range columnWidths {
 		var maxLength int
 		thisColumn := A.Column(i + 1)
 		for j := range thisColumn {
@@ -43,11 +45,25 @@ func (A *Matrix) Print() {
 				maxLength = thisLength
 			}
 		}
-		columnLengths[i] = maxLength
+		columnWidths[i] = strconv.Itoa(maxLength)
 	}
 	
-	for i := 1; i <= A.rows; i++ {
-		fmt.Println(A.Row(i))
+	// We have the widths, so now output each element with the correct column
+	// width so that they line up properly.
+	
+	for i := 0; i < A.rows; i++ {
+		thisRow := A.Row(i + 1)
+		fmt.Printf("[")
+		for j := range thisRow {
+			var printFormat string
+			if j == 0 {
+				printFormat = "%" + columnWidths[j] + "s"
+			} else {
+				printFormat = " %" + columnWidths[j] + "s"
+			}
+			fmt.Printf(printFormat, strconv.Itoa(thisRow[j]))
+		}
+		fmt.Printf("]\n")
 	}
 }
 
