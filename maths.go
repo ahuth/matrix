@@ -4,22 +4,20 @@ package matrix
 // For each element of the result matrix, we get the dot product of the
 // corresponding row from matrix A and column from matrix B.
 
-func Multiply(A, B Matrix) *Matrix {
+func Multiply(A, B *Matrix) *Matrix {
 	C := Zeros(A.rows, B.columns)
 	for r := 1; r <= C.rows; r++ {
-		A_row := A.Row(r)
 		for c := 1; c <= C.columns; c++ {
-			B_col := B.Column(c)
-			C.Set(r, c, dotProduct(A_row, B_col))
+			C.Set(r, c, dotProduct(A.Row(r), B.Column(c)));
 		}
 	}
-	return &C
+	return C
 }
 
 // Add adds two matrices together and returns the resulting matrix.  To do
 // this, we just add together the corresponding elements from each matrix.
 
-func Add(A, B Matrix) Matrix {
+func Add(A, B *Matrix) *Matrix {
 	C := Zeros(A.rows, A.columns)
 	for r := 1; r <= A.rows; r++ {
 		for c := 1; c <= A.columns; c++ {
