@@ -39,6 +39,19 @@ func (A *Matrix) Row(n int) []int {
 	return A.data[A.findIndex(n, 1):A.findIndex(n, A.columns+1)]
 }
 
+// Transpose takes an m x n matrix and returns an n x m matrix where the rows 
+// in the  first matrix are now the columns of the second.
+
+func (A *Matrix) Transpose() *Matrix {
+	var data []int
+	for i := 1; i <= A.columns; i++ {
+		col := A.Column(i)
+		data = append(data, col...)
+	}
+	B := New(A.columns, A.rows, data)
+	return B
+}
+
 // findIndex takes a row and column and returns the corresponding index
 // from the underlying data slice.
 

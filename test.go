@@ -11,6 +11,6 @@ func main() {
 	c := matrix.Multiply(a, b)
 	c.Print()
 	fmt.Println("")
-	d := c.Transpose()
-	d.Print()
+	c = c.Transpose()
+	c.Print()
 }
