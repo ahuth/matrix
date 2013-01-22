@@ -8,23 +8,18 @@ type Matrix struct {
 	data          []int // the contents of the matrix as one long slice.
 }
 
-// Set lets you define the value of a matrix at the given row and
-// column.
-
+// Define the element of a matrix at a given row and column.
 func (A *Matrix) Set(r, c, val int) {
 	A.data[A.findIndex(r, c)] = val
 }
 
-// Get retrieves the contents of the matrix at the row and column.
-
+// Retrieve the contents of a matrix from a given row and column.
 func (A *Matrix) Get(r, c int) int {
 	return A.data[A.findIndex(r, c)]
 }
 
-// Column returns a slice that represents a column from the matrix.
-// This works by examining each row, and adding the nth element of
-// each to the column slice.
-
+// Return a slice representing the column of a matrix.  We find this by examining
+// each row, and adding the nth element of each to a slice.
 func (A *Matrix) Column(n int) []int {
 	col := make([]int, A.rows)
 	for i := 1; i <= A.rows; i++ {
@@ -33,15 +28,13 @@ func (A *Matrix) Column(n int) []int {
 	return col
 }
 
-// Row returns a slice that represents a row from the matrix.
-
+// Return an entire row from a matrix.
 func (A *Matrix) Row(n int) []int {
 	return A.data[A.findIndex(n, 1):A.findIndex(n, A.columns+1)]
 }
 
 // Transpose takes an m x n matrix and returns an n x m matrix where the rows 
 // in the  first matrix are now the columns of the second.
-
 func (A *Matrix) Transpose() *Matrix {
 	var data []int
 	for i := 1; i <= A.columns; i++ {
@@ -52,9 +45,7 @@ func (A *Matrix) Transpose() *Matrix {
 	return B
 }
 
-// findIndex takes a row and column and returns the corresponding index
-// from the underlying data slice.
-
+// Translate a row and column into an index of a matrix's underlying slice.
 func (A *Matrix) findIndex(r, c int) int {
 	return (r-1)*A.columns + (c - 1)
 }

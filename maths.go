@@ -1,9 +1,7 @@
 package matrix
 
-// Multiply multiplies two matrices together and return the resulting matrix.
-// For each element of the result matrix, we get the dot product of the
-// corresponding row from matrix A and column from matrix B.
-
+// Multiply two matrices by finding the dot products of each row-column
+// combination.
 func Multiply(A, B *Matrix) *Matrix {
 	C := Zeros(A.rows, B.columns)
 	for r := 1; r <= C.rows; r++ {
@@ -14,9 +12,7 @@ func Multiply(A, B *Matrix) *Matrix {
 	return C
 }
 
-// Add adds two matrices together and returns the resulting matrix.  To do
-// this, we just add together the corresponding elements from each matrix.
-
+// Add two matrices together by adding corresponding elements of each.
 func Add(A, B *Matrix) *Matrix {
 	C := Zeros(A.rows, A.columns)
 	for r := 1; r <= A.rows; r++ {
@@ -27,10 +23,8 @@ func Add(A, B *Matrix) *Matrix {
 	return C
 }
 
-// dotProduct calculates the algebraic dot product of two slices.  This is just
-// the sum  of the products of corresponding elements in the slices.  We use
-// this when we multiply matrices together.
-
+// Find the dot product by summing the products of corresponding elements of
+// two slices.
 func dotProduct(a, b []int) int {
 	var total int
 	for i := 0; i < len(a); i++ {
