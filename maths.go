@@ -2,18 +2,18 @@ package matrix
 
 // Multiply two matrices by finding the dot products of each row-column
 // combination.
-func Multiply(A, B *Matrix) *Matrix {
+func Multiply(A, B *matrix) *matrix {
 	C := Zeros(A.rows, B.columns)
 	for r := 1; r <= C.rows; r++ {
 		for c := 1; c <= C.columns; c++ {
-			C.Set(r, c, dotProduct(A.Row(r), B.Column(c)));
+			C.Set(r, c, dotProduct(A.Row(r), B.Column(c)))
 		}
 	}
 	return C
 }
 
 // Add two matrices together by adding corresponding elements of each.
-func Add(A, B *Matrix) *Matrix {
+func Add(A, B *matrix) *matrix {
 	C := Zeros(A.rows, A.columns)
 	for r := 1; r <= A.rows; r++ {
 		for c := 1; c <= A.columns; c++ {
