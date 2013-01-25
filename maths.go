@@ -1,7 +1,7 @@
 package matrix
 
-// Multiply two matrices by finding the dot products of each row-column
-// combination.
+// Multiply performs matrix multiplication by finding the dot product of all
+// row/column combinations.
 func Multiply(A, B *matrix) *matrix {
 	C := Zeros(A.rows, B.columns)
 	for r := 1; r <= C.rows; r++ {
@@ -12,7 +12,7 @@ func Multiply(A, B *matrix) *matrix {
 	return C
 }
 
-// Add two matrices together by adding corresponding elements of each.
+// Add performs matrix addition by summing corresponding elements from each matrix.
 func Add(A, B *matrix) *matrix {
 	C := Zeros(A.rows, A.columns)
 	for r := 1; r <= A.rows; r++ {
