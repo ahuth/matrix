@@ -22,7 +22,7 @@ func (A *matrix) Get(r, c int) int {
 func (A *matrix) Column(n int) []int {
 	col := make([]int, A.rows)
 	for i := 1; i <= A.rows; i++ {
-		col[i-1] = A.Row(i)[n-1]
+		col[i-1] = A.Get(i, n)
 	}
 	return col
 }
@@ -32,7 +32,7 @@ func (A *matrix) Row(n int) []int {
 	return A.data[A.findIndex(n, 1):A.findIndex(n, A.columns+1)]
 }
 
-// Transpose takes an m x n matrix and returns an n x m matrix where the rows in
+// Transpose takes an m x n matrix and returns an n x m matrix where the rows of
 // the  first matrix are now the columns of the second.
 func (A *matrix) Transpose() *matrix {
 	var data []int
