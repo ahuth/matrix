@@ -23,8 +23,7 @@ func Add(A, B *matrix) *matrix {
 	return C
 }
 
-// Find the dot product by summing the products of corresponding elements of
-// two slices.
+// dotProduct sums the product of corresponding elements from two slices.
 func dotProduct(a, b []int) int {
 	var total int
 	for i := 0; i < len(a); i++ {
