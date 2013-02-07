@@ -44,7 +44,7 @@ func (A *matrix) Transpose() *matrix {
 	return B
 }
 
-// Translate a row and column into an index of a matrix's underlying slice.
+// findIndex translates a row and column into an index of the matrix's data slice.
 func (A *matrix) findIndex(r, c int) int {
 	return (r-1)*A.columns + (c - 1)
 }
