@@ -40,8 +40,7 @@ func (A *matrix) Transpose() *matrix {
 		col := A.Column(i)
 		data = append(data, col...)
 	}
-	B := New(A.columns, A.rows, data)
-	return B
+	return New(A.columns, A.rows, data)
 }
 
 // findIndex translates a row and column into an index of the matrix's data slice.
