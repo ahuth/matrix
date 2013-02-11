@@ -29,7 +29,7 @@ func (A *matrix) Column(n int) []int {
 
 // Row returns a slice representing one row of a matrx.
 func (A *matrix) Row(n int) []int {
-	return A.data[A.findIndex(n, 1):A.findIndex(n, A.columns+1)]
+	return A.data[A.findIndex(n, 1) : A.findIndex(n, A.columns)+1]
 }
 
 // Transpose takes an m x n matrix and returns an n x m matrix where the rows of
