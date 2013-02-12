@@ -32,8 +32,9 @@ func (A *matrix) String() string {
 		thisRow := A.Row(i + 1)
 		matrixString += "["
 		for j := range thisRow {
-			numSpaces := columnWidths[j] - len(strconv.Itoa(thisRow[j]))
-			matrixString += strings.Repeat(" ", numSpaces) + strconv.Itoa(thisRow[j])
+			token := strconv.Itoa(thisRow[j])
+			numSpaces := columnWidths[j] - len(token)
+			matrixString += strings.Repeat(" ", numSpaces) + token
 			if j < len(thisRow)-1 {
 				matrixString += " "
 			}
