@@ -3,16 +3,14 @@ package matrix
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
-// Print converts the matrix into a string and then outputs it to fmt.Printf.
-func (A *matrix) Print() {
+// String builds a human-readable string that represents the matrix.
+func (A *matrix) String() string {
 
-	// Find the width (in characters) that each column needs to be.  We hold these
-	// widths as strings, not ints, because we're going to use these in a printf
-	// function.
-
-	columnWidths := make([]string, A.columns)
+	// Find the width that each column needs to be.
+	columnWidths := make([]int, A.columns)
 
 	for i := range columnWidths {
 		var maxLength int
@@ -23,24 +21,30 @@ func (A *matrix) Print() {
 				maxLength = thisLength
 			}
 		}
-		columnWidths[i] = strconv.Itoa(maxLength)
+		columnWidths[i] = maxLength
 	}
 
-	// We have the widths, so now output each element with the correct column
-	// width so that they line up properly.
+	// Now we know the width of each column, so build the string by converting
+	// each element to a string and padding with the required number of spaces.
+	var matrixString string
 
 	for i := 0; i < A.rows; i++ {
 		thisRow := A.Row(i + 1)
-		fmt.Printf("[")
+		matrixString += "["
 		for j := range thisRow {
-			var printFormat string
-			if j == 0 {
-				printFormat = "%" + columnWidths[j] + "s"
-			} else {
-				printFormat = " %" + columnWidths[j] + "s"
+			numSpaces := columnWidths[j] - len(strconv.Itoa(thisRow[j]))
+			matrixString += strings.Repeat(" ", numSpaces) + strconv.Itoa(thisRow[j])
+			if j < len(thisRow)-1 {
+				matrixString += " "
 			}
-			fmt.Printf(printFormat, strconv.Itoa(thisRow[j]))
 		}
-		fmt.Printf("]\n")
+		matrixString += "]\n"
 	}
+
+	return matrixString
+}
+
+// Print converts the matrix into a string and then outputs it to fmt.Print.
+func (A *matrix) Print() {
+	fmt.Print(A.String())
 }
