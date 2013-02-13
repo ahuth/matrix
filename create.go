@@ -17,7 +17,7 @@ func Zeros(r, c int) *matrix {
 // New creates an r x c matrix filled with the provided data slice.
 func New(r, c int, data []int) *matrix {
 	if len(data) != r*c {
-		panic("[]int provided to matrix.New() is greater than r x c!")
+		panic("[]int provided to matrix.New() is not equal to r x c!")
 	}
 	A := Zeros(r, c)
 	A.data = data
